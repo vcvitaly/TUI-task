@@ -28,19 +28,20 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GitHubApiService implements VcsApiService {
 
-    @Value("${vcs.github.token}")
-    private String token;
+    private GitHub gitHub;
+
+    public GitHubApiService(GitHub gitHub) {
+        this.gitHub = gitHub;
+    }
 
     @Override
     public List<VcsInfoResponseDto> getVcsDetails(String userName) {
         log.debug("Getting repo details for user {} from GitHub", userName);
         try {
-            GitHub github = new GitHubBuilder().withOAuthToken(token).build();
-            var repositoriesMap = github.getUser(userName).getRepositories();
+            var repositoriesMap = gitHub.getUser(userName).getRepositories();
             return repositoriesMap.values().stream()
                     .map(this::toVcsInfoResponseDto)
                     .collect(Collectors.toList());
-
         } catch (IOException e) {
             throw getApiCommunicationIOException(e);
         }

@@ -2,6 +2,6 @@ logging:
   level:
     com.github.vcvitaly.tuitask: DEBUG
 
-vcs:
-  github:
-    token: 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
+spring:
+  profiles:
+    active: local
