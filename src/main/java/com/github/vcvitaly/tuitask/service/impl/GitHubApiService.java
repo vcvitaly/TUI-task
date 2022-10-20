@@ -3,18 +3,17 @@ package com.github.vcvitaly.tuitask.service.impl;
 import com.github.vcvitaly.tuitask.dto.BranchDetailsDto;
 import com.github.vcvitaly.tuitask.dto.VcsInfoResponseDto;
 import com.github.vcvitaly.tuitask.enumeration.VcsProviderType;
+import com.github.vcvitaly.tuitask.exception.GitHubResourceNotFoundException;
 import com.github.vcvitaly.tuitask.exception.VcsApiCommunicationIOException;
 import com.github.vcvitaly.tuitask.service.VcsApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.kohsuke.github.GHBranch;
+import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
-import org.kohsuke.github.GitHubBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,17 +37,24 @@ public class GitHubApiService implements VcsApiService {
     public List<VcsInfoResponseDto> getVcsDetails(String userName) {
         log.debug("Getting repo details for user {} from GitHub", userName);
         try {
-            var repositoriesMap = gitHub.getUser(userName).getRepositories();
-            return repositoriesMap.values().stream()
+            var repositoryMap = gitHub.getUser(userName).getRepositories();
+            return repositoryMap.values().stream()
                     .map(this::toVcsInfoResponseDto)
                     .collect(Collectors.toList());
+        } catch (GHFileNotFoundException e) {
+            if (e.getMessage().contains("Not Found")) {
+                var resourceName = e.getMessage().split(" ")[0];
+                throw new GitHubResourceNotFoundException(resourceName, e);
+            } else {
+                throw getApiCommunicationIOException(e);
+            }
         } catch (IOException e) {
             throw getApiCommunicationIOException(e);
         }
     }
 
     private VcsApiCommunicationIOException getApiCommunicationIOException(IOException e) {
-        return new VcsApiCommunicationIOException("An exception happened during communication with GItHub API", e);
+        return new VcsApiCommunicationIOException(e);
     }
 
     @Override

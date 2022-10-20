@@ -7,7 +7,7 @@ package com.github.vcvitaly.tuitask.exception;
  */
 public class VcsApiCommunicationIOException extends RuntimeException {
 
-    public VcsApiCommunicationIOException(String message, Throwable cause) {
-        super(message, cause);
+    public VcsApiCommunicationIOException(Throwable cause) {
+        super("An exception happened during communication with GItHub API", cause);
     }
 }
