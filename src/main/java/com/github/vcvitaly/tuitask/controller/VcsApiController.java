@@ -25,7 +25,7 @@ public class VcsApiController {
         this.vcsApiManagementService = vcsApiManagementService;
     }
 
-    @GetMapping("/{userName}/github")
+    @GetMapping("/{userName}/repos/github")
     public List<VcsInfoResponseDto> getGithubRepoDetails(@PathVariable("userName") String userName) {
         return vcsApiManagementService.getVcsDetails(userName, VcsProviderType.GITHUB);
     }

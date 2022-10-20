@@ -1,0 +1,44 @@
+[
+  {
+    "name": "master",
+    "commit": {
+      "sha": "ff9cfc065c94f61f2b215754e2e7abdf53de337e",
+      "url": "https://api.github.com/repos/vcvitaly/Cards-shuffler/commits/ff9cfc065c94f61f2b215754e2e7abdf53de337e"
+    },
+    "protected": false,
+    "protection": {
+      "enabled": false,
+      "required_status_checks": {
+        "enforcement_level": "off",
+        "contexts": [
+
+        ],
+        "checks": [
+
+        ]
+      }
+    },
+    "protection_url": "https://api.github.com/repos/vcvitaly/Cards-shuffler/branches/master/protection"
+  },
+  {
+    "name": "solution",
+    "commit": {
+      "sha": "6dce14e86c99ca5b60771dc47661ca983649b552",
+      "url": "https://api.github.com/repos/vcvitaly/Cards-shuffler/commits/6dce14e86c99ca5b60771dc47661ca983649b552"
+    },
+    "protected": false,
+    "protection": {
+      "enabled": false,
+      "required_status_checks": {
+        "enforcement_level": "off",
+        "contexts": [
+
+        ],
+        "checks": [
+
+        ]
+      }
+    },
+    "protection_url": "https://api.github.com/repos/vcvitaly/Cards-shuffler/branches/solution/protection"
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "repoName": "Cards-shuffler",
+    "ownerLogin": "vcvitaly",
+    "branchesDetails": [
+      {
+        "name": "master",
+        "lastCommitSha": "ff9cfc065c94f61f2b215754e2e7abdf53de337e"
+      },
+      {
+        "name": "solution",
+        "lastCommitSha": "6dce14e86c99ca5b60771dc47661ca983649b552"
+      }
+    ]
+  },
+  {
+    "repoName": "docker-graphite-statsd",
+    "ownerLogin": "vcvitaly",
+    "branchesDetails": [
+      {
+        "name": "carbon-aggregator",
+        "lastCommitSha": "f3e5c7e46437fade2443e18c2323c1c77ea0b783"
+      },
+      {
+        "name": "master",
+        "lastCommitSha": "bc2a492fcfc26a517d5a66a37ebbdc81d5068217"
+      }
+    ]
+  }
+]

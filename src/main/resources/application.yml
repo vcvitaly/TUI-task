@@ -1,6 +1,7 @@
 logging:
   level:
     com.github.vcvitaly.tuitask: DEBUG
+    root: info
 
 spring:
   profiles:

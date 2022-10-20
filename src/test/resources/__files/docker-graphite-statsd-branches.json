@@ -1,0 +1,44 @@
+[
+  {
+    "name": "carbon-aggregator",
+    "commit": {
+      "sha": "f3e5c7e46437fade2443e18c2323c1c77ea0b783",
+      "url": "https://api.github.com/repos/vcvitaly/docker-graphite-statsd/commits/f3e5c7e46437fade2443e18c2323c1c77ea0b783"
+    },
+    "protected": false,
+    "protection": {
+      "enabled": false,
+      "required_status_checks": {
+        "enforcement_level": "off",
+        "contexts": [
+
+        ],
+        "checks": [
+
+        ]
+      }
+    },
+    "protection_url": "https://api.github.com/repos/vcvitaly/docker-graphite-statsd/branches/carbon-aggregator/protection"
+  },
+  {
+    "name": "master",
+    "commit": {
+      "sha": "bc2a492fcfc26a517d5a66a37ebbdc81d5068217",
+      "url": "https://api.github.com/repos/vcvitaly/docker-graphite-statsd/commits/bc2a492fcfc26a517d5a66a37ebbdc81d5068217"
+    },
+    "protected": false,
+    "protection": {
+      "enabled": false,
+      "required_status_checks": {
+        "enforcement_level": "off",
+        "contexts": [
+
+        ],
+        "checks": [
+
+        ]
+      }
+    },
+    "protection_url": "https://api.github.com/repos/vcvitaly/docker-graphite-statsd/branches/master/protection"
+  }
+]
