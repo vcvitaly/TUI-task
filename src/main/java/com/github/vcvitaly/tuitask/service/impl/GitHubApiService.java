@@ -40,7 +40,7 @@ public class GitHubApiService implements VcsApiService {
             var repositoryMap = gitHub.getUser(userName).getRepositories();
             return repositoryMap.values().stream()
                     .map(this::toVcsInfoResponseDto)
-                    .collect(Collectors.toList());
+                    .toList();
         } catch (GHFileNotFoundException e) {
             if (e.getMessage().contains("Not Found")) {
                 var resourceName = e.getMessage().split(" ")[0];

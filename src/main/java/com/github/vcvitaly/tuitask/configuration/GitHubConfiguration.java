@@ -1,5 +1,6 @@
 package com.github.vcvitaly.tuitask.configuration;
 
+import com.github.vcvitaly.tuitask.exception.VcsApiCommunicationIOException;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +29,7 @@ public class GitHubConfiguration {
                     .withOAuthToken(token)
                     .build();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VcsApiCommunicationIOException(e);
         }
     }
 }

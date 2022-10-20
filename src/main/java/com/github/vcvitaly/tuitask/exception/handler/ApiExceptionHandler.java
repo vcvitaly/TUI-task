@@ -4,7 +4,9 @@ import com.github.vcvitaly.tuitask.exception.GitHubResourceNotFoundException;
 import com.github.vcvitaly.tuitask.exception.VcsApiCommunicationIOException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @author Vitalii Chura
  */
 @Slf4j
-@RestControllerAdvice(basePackages = "com.github.vcvitaly.tuitask.controller")
+@RestControllerAdvice
 public class ApiExceptionHandler {
 
     @ExceptionHandler(VcsApiCommunicationIOException.class)
@@ -31,5 +33,15 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), e.getMessage()));
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
+    public ResponseEntity<ErrorResponse> handleException(HttpMediaTypeNotAcceptableException e) {
+        log.error("An exception occurred: ", e);
+        return ResponseEntity
+                .status(HttpStatus.NOT_ACCEPTABLE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorResponse(HttpStatus.NOT_ACCEPTABLE.value(),
+                        String.format("%s, the only supported representation is application/json", e.getMessage())));
     }
 }

@@ -5,9 +5,7 @@ import com.github.vcvitaly.tuitask.enumeration.VcsProviderType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +18,7 @@ import java.util.Map;
 @Slf4j
 public class VcsApiManagementService {
 
-    private Map<VcsProviderType, VcsApiService> vcsApiServiceMap = new HashMap<>();
+    private Map<VcsProviderType, VcsApiService> vcsApiServiceMap = new EnumMap<>(VcsProviderType.class);
 
     public VcsApiManagementService(List<VcsApiService> vcsApiServices) {
         vcsApiServices.forEach(service -> vcsApiServiceMap.put(service.getVcsProviderType(), service));

@@ -3,6 +3,7 @@ package com.github.vcvitaly.tuitask.controller;
 import com.github.vcvitaly.tuitask.dto.VcsInfoResponseDto;
 import com.github.vcvitaly.tuitask.enumeration.VcsProviderType;
 import com.github.vcvitaly.tuitask.service.VcsApiManagementService;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ public class VcsApiController {
         this.vcsApiManagementService = vcsApiManagementService;
     }
 
-    @GetMapping("/{userName}/repos/github")
+    @GetMapping(value = "/{userName}/repos/github", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<VcsInfoResponseDto> getGithubRepoDetails(@PathVariable("userName") String userName) {
         return vcsApiManagementService.getVcsDetails(userName, VcsProviderType.GITHUB);
     }
