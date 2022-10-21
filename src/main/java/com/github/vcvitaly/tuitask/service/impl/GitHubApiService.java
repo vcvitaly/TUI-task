@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.function.Predicate.not;
+
 /**
  * GitHubApiService.
  *
@@ -39,6 +41,7 @@ public class GitHubApiService implements VcsApiService {
         try {
             var repositoryMap = gitHub.getUser(userName).getRepositories();
             return repositoryMap.values().stream()
+                    .filter(not(GHRepository::isFork))
                     .map(this::toVcsInfoResponseDto)
                     .toList();
         } catch (GHFileNotFoundException e) {
