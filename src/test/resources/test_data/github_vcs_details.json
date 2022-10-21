@@ -1,7 +1,7 @@
 [
   {
-    "repoName": "Cards-shuffler",
-    "ownerLogin": "vcvitaly",
+    "repoName": "TestRepo1",
+    "ownerLogin": "TestUser",
     "branchesDetails": [
       {
         "name": "master",
@@ -14,8 +14,8 @@
     ]
   },
   {
-    "repoName": "docker-graphite-statsd",
-    "ownerLogin": "vcvitaly",
+    "repoName": "TestRepo2",
+    "ownerLogin": "TestUser",
     "branchesDetails": [
       {
         "name": "carbon-aggregator",

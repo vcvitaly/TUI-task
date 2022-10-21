@@ -2,6 +2,7 @@ package com.github.vcvitaly.tuitask.service.impl;
 
 import com.github.vcvitaly.tuitask.dto.BranchDetailsDto;
 import com.github.vcvitaly.tuitask.dto.VcsInfoResponseDto;
+import com.github.vcvitaly.tuitask.enumeration.GitHubResourceType;
 import com.github.vcvitaly.tuitask.enumeration.VcsProviderType;
 import com.github.vcvitaly.tuitask.exception.GitHubResourceNotFoundException;
 import com.github.vcvitaly.tuitask.exception.VcsApiCommunicationIOException;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * GitHubApiService.
@@ -44,7 +44,10 @@ public class GitHubApiService implements VcsApiService {
         } catch (GHFileNotFoundException e) {
             if (e.getMessage().contains("Not Found")) {
                 var resourceName = e.getMessage().split(" ")[0];
-                throw new GitHubResourceNotFoundException(resourceName, e);
+                if (resourceName.endsWith("users/" + userName)) {
+                    throw new GitHubResourceNotFoundException(GitHubResourceType.USER, userName, e);
+                }
+                throw new GitHubResourceNotFoundException(GitHubResourceType.GENERAL_RESOURCE, resourceName, e);
             } else {
                 throw getApiCommunicationIOException(e);
             }

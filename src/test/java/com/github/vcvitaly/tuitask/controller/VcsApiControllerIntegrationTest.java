@@ -32,7 +32,8 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 @ContextConfiguration(classes = VcsApiControllerIntegrationTest.TestGitHubConfiguration.class)
 class VcsApiControllerIntegrationTest extends ControllerIntegrationTestTemplate {
 
-    private static final String USERNAME = "vcvitaly";
+    private static final String USERNAME = "TestUser";
+    private static final String INCORRECT_USERNAME = "TestUser1";
 
     @Autowired
     private WebTestClient webTestClient;
@@ -54,42 +55,10 @@ class VcsApiControllerIntegrationTest extends ControllerIntegrationTestTemplate 
 
     @Test
     void aListOfVcsInfoDetailsIsReturned() {
-        wireMockServer.stubFor(
-                get(String.format("/users/%s", USERNAME))
-                        .willReturn(
-                                aResponse()
-                                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-                                        .withBodyFile("user.json")
-                                        .withStatus(200)
-                        )
-        );
-        wireMockServer.stubFor(
-                get(String.format("/users/%s/repos?per_page=100", USERNAME))
-                        .willReturn(
-                                aResponse()
-                                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-                                        .withBodyFile("repos.json")
-                                        .withStatus(200)
-                        )
-        );
-        wireMockServer.stubFor(
-                get(String.format("/repos/%s/Cards-shuffler/branches", USERNAME))
-                        .willReturn(
-                                aResponse()
-                                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-                                        .withBodyFile("card_shuffler_branches.json")
-                                        .withStatus(200)
-                        )
-        );
-        wireMockServer.stubFor(
-                get(String.format("/repos/%s/docker-graphite-statsd/branches", USERNAME))
-                        .willReturn(
-                                aResponse()
-                                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-                                        .withBodyFile("docker-graphite-statsd-branches.json")
-                                        .withStatus(200)
-                        )
-        );
+        setUpWiremockForGetRequest("/users/%s", "user.json");
+        setUpWiremockForGetRequest("/users/%s/repos?per_page=100", "repos.json");
+        setUpWiremockForGetRequest("/repos/%s/TestRepo1/branches", "TestRepo1_branches.json");
+        setUpWiremockForGetRequest("/repos/%s/TestRepo2/branches", "TestRepo2_branches.json");
 
         webTestClient
                 .get()
@@ -99,6 +68,34 @@ class VcsApiControllerIntegrationTest extends ControllerIntegrationTestTemplate 
                 .is2xxSuccessful()
                 .expectBody()
                 .json(ResourceUtil.readResourceAsString("test_data/github_vcs_details.json"));
+    }
+
+    @Test
+    void anErrorResponseIsReturnedUponIncorrectMediaType() {
+        webTestClient
+                .get()
+                .uri(String.format("/api/v1/vcs-api/%s/repos/github", INCORRECT_USERNAME))
+                .accept(MediaType.APPLICATION_XML)
+                .exchange()
+                .expectStatus()
+                .is4xxClientError()
+                .expectBody()
+                .jsonPath("status")
+                .isEqualTo(406)
+                .jsonPath("message")
+                .isEqualTo("Could not find acceptable representation, the only supported representation is application/json");
+    }
+
+    private static void setUpWiremockForGetRequest(String format, String fileName) {
+        wireMockServer.stubFor(
+                get(String.format(format, USERNAME))
+                        .willReturn(
+                                aResponse()
+                                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                                        .withBodyFile(fileName)
+                                        .withStatus(200)
+                        )
+        );
     }
 
 

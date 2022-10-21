@@ -1,5 +1,7 @@
 package com.github.vcvitaly.tuitask.exception;
 
+import com.github.vcvitaly.tuitask.enumeration.GitHubResourceType;
+
 /**
  * GitHubUserNotFoundException.
  *
@@ -7,7 +9,7 @@ package com.github.vcvitaly.tuitask.exception;
  */
 public class GitHubResourceNotFoundException extends RuntimeException {
 
-    public GitHubResourceNotFoundException(String resourceName, Exception cause) {
-        super(String.format("GitHub resource %s not found", resourceName), cause);
+    public GitHubResourceNotFoundException(GitHubResourceType resourceType, String resourceName, Exception cause) {
+        super(String.format("GitHub %s %s not found", resourceType.getName(), resourceName), cause);
     }
 }
