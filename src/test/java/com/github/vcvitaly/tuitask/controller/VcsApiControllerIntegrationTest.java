@@ -62,7 +62,7 @@ class VcsApiControllerIntegrationTest extends ControllerIntegrationTestTemplate 
 
         webTestClient
                 .get()
-                .uri(String.format("/api/v1/vcs-api/%s/repos/github", USERNAME))
+                .uri(String.format("/api/v1/vcs-api/%s/github/repos", USERNAME))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()
@@ -74,7 +74,7 @@ class VcsApiControllerIntegrationTest extends ControllerIntegrationTestTemplate 
     void anErrorResponseIsReturnedUponIncorrectMediaType() {
         webTestClient
                 .get()
-                .uri(String.format("/api/v1/vcs-api/%s/repos/github", INCORRECT_USERNAME))
+                .uri(String.format("/api/v1/vcs-api/%s/github/repos", INCORRECT_USERNAME))
                 .accept(MediaType.APPLICATION_XML)
                 .exchange()
                 .expectStatus()
