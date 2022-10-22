@@ -1,10 +1,9 @@
 FROM maven:3-amazoncorretto-17 as build
 WORKDIR /app
 
-COPY pom.xml ./
-#COPY gradle gradle
+COPY ../pom.xml ./
 RUN mvn dependency:resolve
-COPY src src
+COPY ../src src
 
 RUN mvn clean package
 
