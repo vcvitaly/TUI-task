@@ -21,7 +21,7 @@ public class GitHubConfiguration {
     @Value("${vcs.github.token}")
     private String token;
 
-    @Profile("local")
+    @Profile({"local", "prod"})
     @Bean
     public GitHub gitHub() {
         try {

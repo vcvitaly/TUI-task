@@ -21,11 +21,12 @@ docker -v
 Build an image:
 
 ```
-./build_image.sh
+./scripts/build_image.sh
 ```
-Run the image:
+Create a github token with the repo scope, replace <your_token> with that token 
+in the run script and run the image:
 ```
-./run_app.sh
+./scripts/run_app.sh
 ```
 You can send requests to the app using cURL:
 ```
