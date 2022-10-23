@@ -32,6 +32,10 @@ You can send requests to the app using cURL:
 ```
 curl --location --request GET 'http://localhost:8080/api/v1/vcs-api/vcvitaly/repos/github'
 ```
+Or access Swagger at:
+```
+http://localhost:8080/swagger-ui/index.html
+```
 
 ### Steps to deploy the application to AWS
 
@@ -41,3 +45,7 @@ then run the deployment script:
 ./provisioning/deploy_to_ecs.sh
 ```
 
+### TODO
+
+- add a script to create API Gateway
+- prepare a Jenkins pipeline
