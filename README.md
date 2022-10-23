@@ -35,3 +35,9 @@ curl --location --request GET 'http://localhost:8080/api/v1/vcs-api/vcvitaly/rep
 
 ### Steps to deploy the application to AWS
 
+Edit the `provisioning/env.sh` file, in particular ECR_REGISTRY and GITHUB_TOKEN variables, 
+then run the deployment script:
+```
+./provisioning/deploy_to_ecs.sh
+```
+
