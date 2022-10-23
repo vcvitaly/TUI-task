@@ -21,7 +21,7 @@ docker -v
 Build an image:
 
 ```
-./provisioning/build_image.sh
+./provisioning/build_image.sh tui_task_0.0.1
 ```
 Create a github token with the repo scope, replace <your_token> with that token 
 in the run script and run the image:

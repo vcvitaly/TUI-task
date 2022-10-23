@@ -1,6 +1,14 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
-  SubnetID:
+  resourcePrefix:
+    Type: String
+  ecrRegistry:
+    Type: String
+  imageName:
+    Type: String
+  githubToken:
+    Type: String
+  applicationProfile:
     Type: String
 Resources:
   VPC:
@@ -12,7 +20,7 @@ Resources:
       EnableDnsHostnames: "true"
       Tags:
         - Key: "Name"
-          Value: "tui-task-vpc"
+          Value: !Sub ${resourcePrefix}-repo
   PublicSubnetOne:
     Type: AWS::EC2::Subnet
     Properties:
@@ -86,13 +94,13 @@ Resources:
       NetworkMode: awsvpc
       ExecutionRoleArn: !Ref ExecutionRole
       ContainerDefinitions:
-        - Name: tui-task-container
-          Image: 082373558123.dkr.ecr.eu-west-2.amazonaws.com/tui-task-repo:tui_task_0.0.1
+        - Name: !Sub ${resourcePrefix}-container
+          Image: !Sub ${ecrRegistry}/${resourcePrefix}-repo:${imageName}
           Environment:
             - Name: GITHUB_TOKEN
-              Value: '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'
+              Value: !Sub ${githubToken}
             - Name: APPLICATION_PROFILE
-              Value: 'prod'
+              Value: !Sub ${applicationProfile}
           PortMappings:
             - ContainerPort: 8080
           LogConfiguration:
@@ -107,7 +115,7 @@ Resources:
   Service:
     Type: AWS::ECS::Service
     Properties:
-      ServiceName: tui-task-service
+      ServiceName: !Sub ${resourcePrefix}-service
       Cluster: !Ref Cluster
       TaskDefinition: !Ref TaskDefinition
       DesiredCount: 1
